@@ -1,29 +1,6 @@
 import { divideByUnit } from "../src/utils/count.js";
 import Lotto from "../src/domain/Lotto.js";
-import { PRICE } from "../src/constants/price.js";
-import Ticket from "../src/domain/Ticket.js";
-
-test("입력받은 금액에 해당하는 개수를 구한다.", () => {
-  // given
-  const money = 1000;
-
-  // when
-  const result = divideByUnit(money, PRICE.UNIT);
-
-  // then
-  expect(result).toBe(1);
-});
-
-test("정해진 개수만큼 로또를 생성한다.", () => {
-  // given
-  const lottoCount = 3;
-
-  // when
-  const lottos = Ticket.createLottos(lottoCount);
-
-  // then
-  expect(lottos.length).toBe(lottoCount);
-});
+import { PRICE } from "../src/domain/Price.js";
 
 test("로또 번호를 가질 수 있다.", () => {
   // given

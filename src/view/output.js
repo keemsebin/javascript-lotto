@@ -1,5 +1,5 @@
 import { OUTPUT } from "../constants/message.js";
-import { LOTTO_STATUS } from "../constants/lotto.js";
+import { LOTTO_STATUS } from "../domain/LottoMachine.js";
 
 const Output = {
   print: (message) => {

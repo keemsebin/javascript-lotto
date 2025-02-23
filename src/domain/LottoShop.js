@@ -13,14 +13,11 @@ const LottoShop = {
       const number = getRandomNumber(LOTTO_NUMBER.MIN, LOTTO_NUMBER.MAX);
       LottoShop.checkAndAddLottoNumbers(randomNumberStore, number);
     }
-    return [...randomNumberStore];
+    return new Lotto([...randomNumberStore]);
   },
 
   createLottos: (count) => {
-    return Array.from({ length: count }, () => {
-      const lottoNumbers = LottoShop.issueLottoNumbers();
-      return new Lotto(lottoNumbers);
-    });
+    return Array.from({ length: count }, () => LottoShop.issueLottoNumbers());
   },
 };
 

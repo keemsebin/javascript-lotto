@@ -2,12 +2,6 @@ import { ERROR } from "../constants/message.js";
 import { throwError } from "../utils/throwError.js";
 
 class Validator {
-  validate(input) {
-    this.empty(input);
-    this.range({ min, max }, input);
-    this.number(input);
-  }
-
   empty(input) {
     if (input === "") {
       throwError(ERROR.EMPTY);

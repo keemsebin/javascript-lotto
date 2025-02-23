@@ -1,6 +1,4 @@
-import { divideByUnit } from "../src/utils/count.js";
 import Lotto from "../src/domain/Lotto.js";
-import { PRICE } from "../src/domain/Price.js";
 
 test("로또 번호를 가질 수 있다.", () => {
   // given
@@ -35,11 +33,13 @@ test("로또 번호는 오름차순으로 정렬된다", () => {
 
 test("하나의 로또 티켓 번호와 내가 입력한 로또 번호간의 공통된 번호 개수를 구한다.", () => {
   const lottoNumbers = [1, 2, 3, 4, 5, 6];
-  const givenLottoNumber = [2, 3, 4, 5, 6, 7];
+  const givenLottoNumber = new Lotto([2, 3, 4, 5, 6, 7]);
 
   const lotto = new Lotto(lottoNumbers);
 
-  expect(lotto.getIncludeSameNumbers(givenLottoNumber)).toBe(5);
+  expect(lotto.getIncludeSameNumbers(givenLottoNumber.getLottoNumbers())).toBe(
+    5
+  );
 });
 
 test("로또 번호에 보너스 번호가 포함되는지 확인한다.", () => {

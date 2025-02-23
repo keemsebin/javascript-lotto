@@ -1,26 +1,33 @@
-import { LOTTO_STATUS } from "../constants/lotto.js";
+export const LOTTO_STATUS = Object.freeze([
+  { RANK: 1, COUNT: 6, REWORD: 2_000_000_000, IS_BONUS: false },
+  { RANK: 2, COUNT: 5, REWORD: 30_000_000, IS_BONUS: true },
+  { RANK: 3, COUNT: 5, REWORD: 1_500_000, IS_BONUS: false },
+  { RANK: 4, COUNT: 4, REWORD: 50_000, IS_BONUS: false },
+  { RANK: 5, COUNT: 3, REWORD: 5000, IS_BONUS: false },
+]);
 
 class LottoMachine {
-  issuedLottoNumbers;
+  #issuedLottoNumbers = [];
+  #matchedLottoStatus;
 
   constructor(issuedLottoNumbers) {
-    this.issuedLottoNumbers = issuedLottoNumbers;
-    this.matchedLottoStatus = [];
+    this.#issuedLottoNumbers = issuedLottoNumbers;
+    this.#matchedLottoStatus = [];
   }
 
   updateStatus(callback) {
     const currentStatus = LOTTO_STATUS.find(callback);
-    this.matchedLottoStatus.push(currentStatus);
+    this.#matchedLottoStatus.push(currentStatus);
   }
 
   getMatchingNumbers(enteredLottoNumbers) {
-    return this.issuedLottoNumbers.map((lotto) => {
-      return lotto.getSameNumbers(enteredLottoNumbers);
+    return this.#issuedLottoNumbers.map((lotto) => {
+      return lotto.getIncludeSameNumbers(enteredLottoNumbers);
     });
   }
 
   getHasBonusNumbers(bonusLottoNumbers) {
-    return this.issuedLottoNumbers.map((lotto) => {
+    return this.#issuedLottoNumbers.map((lotto) => {
       return lotto.hasBonusNumber(bonusLottoNumbers);
     });
   }
@@ -46,7 +53,7 @@ class LottoMachine {
 
     this.updateFinalStatus(matchingNumbers, isBonusArray);
 
-    return this.matchedLottoStatus;
+    return this.#matchedLottoStatus;
   }
 }
 

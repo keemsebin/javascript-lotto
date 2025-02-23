@@ -1,4 +1,4 @@
-import { INPUT, OUTPUT, RETRY_STRING } from "./constants/message.js";
+import { ERROR, INPUT, OUTPUT, RETRY_STRING } from "./constants/message.js";
 import Input from "./view/Input.js";
 import Output from "./view/Output.js";
 import { divideByUnit } from "./utils/count.js";
@@ -8,6 +8,7 @@ import LottoResult from "./domain/LottoResult.js";
 import { throwError } from "./utils/throwError.js";
 import LottoShop from "./domain/LottoShop.js";
 import Price, { PRICE } from "./domain/Price.js";
+import LottoNumber from "./domain/LottoNumber.js";
 
 /**
  * step 1의 시작점이 되는 파일입니다.
@@ -31,7 +32,8 @@ const getNeededLottoNumbers = async () => {
 
   const bonusLottoNumber = await Input.retry(async () => {
     const input = await Input.readLineAsync(INPUT.BONUS_NUMBER);
-    return Number(input);
+    const bonusLotto = new LottoNumber(input);
+    return Number(bonusLotto.getValue());
   });
   return { winningLotto, bonusLottoNumber };
 };
@@ -68,7 +70,7 @@ const start = async () => {
   const retry = await Input.retry(async () => {
     const input = await Input.readLineAsync(INPUT.RETRY);
     if (!RETRY_STRING.includes(input)) {
-      throwError(ERROR);
+      throwError(ERROR.INVALID_RETRY_STRING);
     }
     return input.toLowerCase();
   });

@@ -2,14 +2,12 @@ import { INPUT, OUTPUT, RETRY_STRING } from "./constants/message.js";
 import Input from "./view/Input.js";
 import Output from "./view/Output.js";
 import { divideByUnit } from "./utils/count.js";
-import PriceValidator from "./validation/PriceValidator.js";
-import BonusNumberValidator from "./validation/BonusNumberValidator.js";
 import Lotto from "./domain/Lotto.js";
 import LottoMachine from "./domain/LottoMachine.js";
 import LottoResult from "./domain/LottoResult.js";
-import { PRICE } from "./constants/price.js";
 import { throwError } from "./utils/throwError.js";
-import Ticket from "./domain/Ticket.js";
+import LottoShop from "./domain/LottoShop.js";
+import Price, { PRICE } from "./domain/Price.js";
 
 /**
  * step 1의 시작점이 되는 파일입니다.
@@ -19,8 +17,8 @@ import Ticket from "./domain/Ticket.js";
 const priceInput = async () =>
   Input.retry(async () => {
     const input = await Input.readLineAsync(INPUT.PRICE);
-    new PriceValidator().validatePrice(Number(input));
-    return Number(input);
+    const price = new Price(input);
+    return Number(price.getPrice());
   });
 
 const getNeededLottoNumbers = async () => {
@@ -33,10 +31,6 @@ const getNeededLottoNumbers = async () => {
 
   const bonusLottoNumber = await Input.retry(async () => {
     const input = await Input.readLineAsync(INPUT.BONUS_NUMBER);
-    new BonusNumberValidator().validateBonusNumber(
-      winningLotto.getLottoNumbers(),
-      Number(input)
-    );
     return Number(input);
   });
   return { winningLotto, bonusLottoNumber };
@@ -48,7 +42,7 @@ const game = async () => {
   const countNumber = divideByUnit(PRICE.UNIT, price);
   Output.print(`${countNumber}${OUTPUT.BUY_COUNT}`);
 
-  const lottos = Ticket.createLottos(countNumber);
+  const lottos = LottoShop.createLottos(countNumber);
   Output.printLottoNumber(lottos);
 
   const { winningLotto, bonusLottoNumber } = await getNeededLottoNumbers();

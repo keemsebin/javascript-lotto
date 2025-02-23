@@ -2,14 +2,13 @@ import { ERROR } from "../constants/message.js";
 import { throwError } from "../utils/throwError.js";
 import { isEmpty, isNumber, isRange } from "../utils/validation.js";
 
-export const LOTTO_NUMBER = Object.freeze({
-  MIN: 1,
-  MAX: 45,
-  LENGTH: 6,
-});
-
 class Lotto {
   #numbers = [];
+  static LOTTO_NUMBER = Object.freeze({
+    MIN: 1,
+    MAX: 45,
+    LENGTH: 6,
+  });
 
   constructor(numbers) {
     this.#numbers = this.sortLottoNumber(numbers);
@@ -23,7 +22,7 @@ class Lotto {
   }
 
   checkLength(numbers) {
-    if (numbers.length !== LOTTO_NUMBER.LENGTH) {
+    if (numbers.length !== this.constructor.LOTTO_NUMBER.LENGTH) {
       throwError(ERROR.LENGTH);
     }
   }
@@ -33,8 +32,11 @@ class Lotto {
       isEmpty(number);
       isNumber(number);
       isRange(
-        { min: LOTTO_NUMBER.MIN, max: LOTTO_NUMBER.MAX },
-        LOTTO_NUMBER.LENGTH
+        {
+          min: this.constructor.LOTTO_NUMBER.MIN,
+          max: this.constructor.LOTTO_NUMBER.MAX,
+        },
+        this.constructor.LOTTO_NUMBER.LENGTH
       );
     });
     this.isDuplicate(numbers);

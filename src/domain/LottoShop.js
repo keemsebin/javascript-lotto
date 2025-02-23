@@ -1,5 +1,5 @@
 import { getRandomNumber } from "../utils/random.js";
-import Lotto, { LOTTO_NUMBER } from "./Lotto.js";
+import Lotto from "./Lotto.js";
 
 const LottoShop = {
   checkAndAddLottoNumbers: (store, number) => {
@@ -9,8 +9,11 @@ const LottoShop = {
 
   issueLottoNumbers: () => {
     const randomNumberStore = new Set();
-    while (randomNumberStore.size < LOTTO_NUMBER.LENGTH) {
-      const number = getRandomNumber(LOTTO_NUMBER.MIN, LOTTO_NUMBER.MAX);
+    while (randomNumberStore.size < Lotto.LOTTO_NUMBER.LENGTH) {
+      const number = getRandomNumber(
+        Lotto.LOTTO_NUMBER.MIN,
+        Lotto.LOTTO_NUMBER.MAX
+      );
       LottoShop.checkAndAddLottoNumbers(randomNumberStore, number);
     }
     return new Lotto([...randomNumberStore]);

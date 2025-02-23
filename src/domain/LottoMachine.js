@@ -1,14 +1,14 @@
-export const LOTTO_STATUS = Object.freeze([
-  { RANK: 1, COUNT: 6, REWORD: 2_000_000_000, IS_BONUS: false },
-  { RANK: 2, COUNT: 5, REWORD: 30_000_000, IS_BONUS: true },
-  { RANK: 3, COUNT: 5, REWORD: 1_500_000, IS_BONUS: false },
-  { RANK: 4, COUNT: 4, REWORD: 50_000, IS_BONUS: false },
-  { RANK: 5, COUNT: 3, REWORD: 5000, IS_BONUS: false },
-]);
-
 class LottoMachine {
   #issuedLottoNumbers = [];
   #matchedLottoStatus;
+
+  static LOTTO_STATUS = Object.freeze([
+    { RANK: 1, COUNT: 6, REWORD: 2_000_000_000, IS_BONUS: false },
+    { RANK: 2, COUNT: 5, REWORD: 30_000_000, IS_BONUS: true },
+    { RANK: 3, COUNT: 5, REWORD: 1_500_000, IS_BONUS: false },
+    { RANK: 4, COUNT: 4, REWORD: 50_000, IS_BONUS: false },
+    { RANK: 5, COUNT: 3, REWORD: 5000, IS_BONUS: false },
+  ]);
 
   constructor(issuedLottoNumbers) {
     this.#issuedLottoNumbers = issuedLottoNumbers;
@@ -16,7 +16,7 @@ class LottoMachine {
   }
 
   updateStatus(callback) {
-    const currentStatus = LOTTO_STATUS.find(callback);
+    const currentStatus = this.constructor.LOTTO_STATUS.find(callback);
     this.#matchedLottoStatus.push(currentStatus);
   }
 

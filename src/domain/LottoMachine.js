@@ -28,7 +28,7 @@ class LottoMachine {
 
   getHasBonusNumbers(bonusLottoNumbers) {
     return this.#issuedLottoNumbers.map((lotto) => {
-      return lotto.hasBonusNumber(bonusLottoNumbers);
+      return lotto.getLottoNumbers().includes(bonusLottoNumbers);
     });
   }
 

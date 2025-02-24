@@ -2,6 +2,14 @@ import Lotto from "../src/domain/Lotto.js";
 import LottoMachine from "../src/domain/LottoMachine.js";
 
 describe("발행한 로또 번호와 입력한 로또 번호의 일치 갯수를 기반으로 로또 상태를 매칭한다", () => {
+  test("로또 번호에 보너스 번호가 포함되는지 확인한다.", () => {
+    const lottoNumbers = new Lotto([1, 2, 3, 4, 5, 6]);
+    const lotto = new LottoMachine([lottoNumbers]);
+    const bonusNumber = 3;
+
+    expect(lotto.getHasBonusNumbers(bonusNumber)).toBeTruthy();
+  });
+
   test("숫자 5개가 일치하고 보너스 숫자가 존재하는 경우 2등을 반환한다.", () => {
     // given
     const issuedLottoNumbers = new Lotto([2, 3, 4, 5, 6, 7]);

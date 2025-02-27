@@ -1,6 +1,6 @@
 import { ERROR } from "../constants/message.js";
 import { throwError } from "../utils/throwError.js";
-import LottoNumber from "./LottoNumber.js";
+import { LottoNumber } from "./LottoNumber.js";
 
 class Lotto {
   #numbers = [];
@@ -44,4 +44,4 @@ class Lotto {
   }
 }
 
-export default Lotto;
+export { Lotto };

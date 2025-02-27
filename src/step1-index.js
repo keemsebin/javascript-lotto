@@ -2,13 +2,13 @@ import { ERROR, INPUT, OUTPUT, RETRY_STRING } from "./constants/message.js";
 import Input from "./view/Input.js";
 import Output from "./view/Output.js";
 import { divideByUnit } from "./utils/count.js";
-import Lotto from "./domain/Lotto.js";
-import LottoMachine from "./domain/LottoMachine.js";
-import LottoResult from "./domain/LottoResult.js";
+import { Lotto } from "./domain/Lotto.js";
+import { LottoMachine } from "./domain/LottoMachine.js";
+import { LottoResult } from "./domain/LottoResult.js";
 import { throwError } from "./utils/throwError.js";
 import LottoShop from "./domain/LottoShop.js";
-import Price, { PRICE } from "./domain/Price.js";
-import LottoNumber from "./domain/LottoNumber.js";
+import { Price, PRICE } from "./domain/Price.js";
+import { LottoNumber } from "./domain/LottoNumber.js";
 
 /**
  * step 1의 시작점이 되는 파일입니다.

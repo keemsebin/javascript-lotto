@@ -1,6 +1,6 @@
 import { getRandomNumber } from "../utils/random.js";
-import Lotto from "./Lotto.js";
-import LottoNumber from "./LottoNumber.js";
+import { Lotto } from "./Lotto.js";
+import { LottoNumber } from "./LottoNumber.js";
 
 const LottoShop = {
   checkAndAddLottoNumbers: (store, number) => {

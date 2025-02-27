@@ -10,8 +10,8 @@ class LottoNumber {
   });
 
   constructor(number) {
-    this.validate(number);
     this.#number = number;
+    this.validate(number);
   }
 
   validate(number) {
@@ -35,4 +35,4 @@ class LottoNumber {
   }
 }
 
-export default LottoNumber;
+export { LottoNumber };

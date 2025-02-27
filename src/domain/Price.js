@@ -33,4 +33,4 @@ class Price {
   }
 }
 
-export default Price;
+export { Price };

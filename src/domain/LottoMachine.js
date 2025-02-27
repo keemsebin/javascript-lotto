@@ -57,4 +57,4 @@ class LottoMachine {
   }
 }
 
-export default LottoMachine;
+export { LottoMachine };

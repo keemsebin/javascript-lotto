@@ -25,7 +25,7 @@ class Button extends Component {
       return `
       <button 
         id="${id}"  
-        type="button"
+        type="submit"
         class="${classList.join(
           " "
         )} button h-36 flex justify-center items-center text-md font-semibold rounded-sm white bg-primary cursor-pointer" 

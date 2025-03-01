@@ -1,46 +1,5 @@
-// class Button {
-//   constructor({ $target, text, onClick, styles = {} }) {
-//     this.button = document.createElement("button");
-//     this.button.className = "Button";
-//     this.button.innerText = text;
-//     this.button.onclick = onClick;
-//     this.button.classList.add(
-//       "button",
-//       "flex",
-//       "justify-center",
-//       "items-center",
-//       "text-md",
-//       "font-semibold",
-//       "white"
-//     );
-
 import Component from "../../../core/component";
-
-//     if (styles) {
-//       Object.entries(styles).forEach(([prop, value]) => {
-//         this.button.style[prop] = value;
-//       });
-//     }
-
-//     if ($target) {
-//       $target.appendChild(this.button);
-//     }
-//   }
-
-//   render() {
-//     return this.button;
-//   }
-
-//   disable() {
-//     this.button.disabled = true;
-//   }
-
-//   enable() {
-//     this.button.disabled = false;
-//   }
-// }
-
-// export default Button;
+import { styleStr } from "../../../helper/style";
 
 class Button extends Component {
   constructor() {
@@ -51,55 +10,49 @@ class Button extends Component {
     this.props = {
       content: "",
       onClick: () => {},
-      disabled: false,
       styles: {},
-      key: "",
+      classList: [],
       id: "",
     };
   }
 
-  template(props) {
+  template() {
     return (props) => {
       if (props) this.setProps(props);
 
-      const { content, disabled, key, id, styles } = this.props;
-      const inlineStyleString = Object.entries(styles)
-        .map(([key, value]) => `${key}: ${value};`)
-        .join(" ");
+      const { content, classList, id, styles } = this.props;
 
       return `
       <button 
+        id="${id}"  
         type="button"
-        ${disabled && "disabled"}
-        id=${id}
-        class="${key} button flex justify-center items-center text-md font-semibold white" 
-        style="${inlineStyleString}"
+        class="${classList.join(
+          " "
+        )} button h-36 flex justify-center items-center text-md font-semibold rounded-sm white bg-primary cursor-pointer" 
+        style="${styleStr(
+          styles
+        )} padding: 0 16px; border: none; white-space: nowrap;"
       >
         ${content}
       </button>
     `;
     };
   }
+
   setEvent() {
-    const { onClick, id } = props;
-    document.getElementById(id).addEventListener("click", () => onClick());
-    console.log("11");
+    const { onClick, id } = this.props;
+    const button = document.getElementById(id);
+    if (typeof onClick === "function") {
+      button.addEventListener("click", (event) => {
+        onClick(event);
+      });
+    }
   }
 
   render(props) {
     if (props) this.setProps(props);
-    console.log("2");
     const templateFn = this.template();
     const html = templateFn(this.props);
-
-    // if (this.props.containerId) {
-    //   const container = document.getElementById(this.props.containerId);
-    //   if (container) {
-    //     container.innerHTML = html;
-    //     this.setEvent();
-    //     this.componentDidMount();
-    //   }
-    // }
 
     return html;
   }

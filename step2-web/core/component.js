@@ -5,7 +5,8 @@ export default class Component {
   state;
   children = [];
 
-  constructor() {
+  constructor(props) {
+    this.props = props;
     this.children = [];
     this.initState();
     this.setDefaultProps();
@@ -14,8 +15,6 @@ export default class Component {
   initState() {
     this.state = {};
   }
-
-  componentDidMount() {}
 
   addChild(C, ...args) {
     const component = new C(...args);
@@ -48,9 +47,25 @@ export default class Component {
     this.render();
   }
 
+  componentDidMount() {
+    this.children.forEach((child) => {
+      if (typeof child.setEvent === "function") {
+        child.setEvent();
+      }
+    });
+  }
+
   render() {
     const templateFn = this.template();
     const html = templateFn(this.props);
     return html;
+  }
+
+  mount(containerId) {
+    const container = document.getElementById(containerId);
+    if (container) {
+      container.innerHTML = this.render();
+      this.componentDidMount();
+    }
   }
 }

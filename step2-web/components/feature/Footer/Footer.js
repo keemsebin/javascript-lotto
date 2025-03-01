@@ -1,33 +1,4 @@
-// class Footer {
-//   constructor(content) {
-//     this.content = content;
-//     this.render();
-//   }
-
-//   render() {
-//     const footer = document.createElement("footer");
-//     footer.classList.add("footer", "Flex", "justify-center", "items-center");
-
-//     const contentElement = document.createElement("p");
-//     contentElement.classList.add(
-//       "flex",
-//       "justify-center",
-//       "items-center",
-//       "text-md",
-//       "font-bold",
-//       "primary"
-//     );
-//     contentElement.textContent = this.content;
-
-//     footer.appendChild(contentElement);
-//     document.body.appendChild(footer);
-//   }
-// }
-
-// export default Footer;
-
 import Component from "../../../core/component";
-
 export default class Footer extends Component {
   initState() {
     this.state = {
@@ -49,7 +20,10 @@ export default class Footer extends Component {
       }
 
       return `
-        <footer class="footer flex justify-center items-center">
+        <footer 
+          class="footer w-full fixed flex justify-center items-center bg-gray" 
+          style="bottom: 0; left: 0; height: 80px; border-top: 1px solid rgba(0, 0, 0, 0.12);"
+        >
           <p class="flex justify-center items-center text-md font-bold primary">
             ${this.state.content}
           </p>

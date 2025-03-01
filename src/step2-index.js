@@ -1,15 +1,5 @@
-import "../step2-web/components/common/Layout/layout.css";
-import "../step2-web/components/common/Colors/colors.css";
-import "../step2-web/components/common/Box/box.css";
-import "../step2-web/components/common/Text/text.css";
-import "../step2-web/components/common/Button/button.css";
 import "../step2-web/components/common/Modal/modal.css";
-import "../step2-web/components/common/Table/table.css";
-import "../step2-web/components/common/Style/flex.css";
-import "../step2-web/components/common/Input/input.css";
-import "../step2-web/components/feature/Header/header.css";
-import "../step2-web/components/feature/Footer/footer.css";
-import "../step2-web/components/feature/LottoShop/lottoShop.css";
+import "../step2-web/components/common/Style/index.css";
 import Header from "../step2-web/components/feature/Header/Header";
 import LottoShop from "../step2-web/components/feature/LottoShop/LottoShop";
 import Footer from "../step2-web/components/feature/Footer/Footer";
@@ -21,16 +11,10 @@ import Footer from "../step2-web/components/feature/Footer/Footer";
 
 document.addEventListener("DOMContentLoaded", () => {
   const header = new Header();
-
   const lottoShop = new LottoShop();
-
   const footer = new Footer();
 
-  header.setProps({ containerId: "header-container" });
-  lottoShop.setProps({ containerId: "lotto-shop-container" });
-  footer.setProps({ containerId: "footer-container" });
-
-  header.render();
-  lottoShop.render();
-  footer.render();
+  header.mount("header-container");
+  lottoShop.mount("lotto-shop-container");
+  footer.mount("footer-container");
 });

@@ -1,50 +1,16 @@
-// class Box {
-//   constructor({ classList = [], styles = {} }) {
-//     this.element = document.createElement("div");
-//     this.element.classList.add("box");
-//     this.applyClassList(classList);
-//     this.applyStyles(styles);
-//   }
-
 import Component from "../../../core/component";
-
-//   applyClassList(classList) {
-//     classList.forEach((className) => {
-//       this.element.classList.add(className);
-//     });
-//   }
-
-//   applyStyles(styles) {
-//     Object.entries(styles).forEach(([key, value]) => {
-//       this.element.style[key] = value;
-//     });
-//   }
-
-//   addElement(childElement) {
-//     this.element.appendChild(childElement);
-//   }
-
-//   clear() {
-//     this.element.innerHTML = "";
-//   }
-
-//   render() {
-//     return this.element;
-//   }
-// }
-
-// export default Box;
+import { styleStr } from "../../../helper/style";
 
 class Box extends Component {
   setDefaultProps() {
     this.props = {
-      classList: []
+      classList: [],
       styles: {},
       children: [],
     };
   }
 
-  template(props) {
+  template() {
     return (props) => {
       if (props) this.setProps(props);
 
@@ -57,10 +23,10 @@ class Box extends Component {
 
       return `
       <div 
-        class="box ${classList.join(" ")}"
-        style="${Object.entries(styles || {})
-          .map(([prop, value]) => `${prop}: ${value}`)
-          .join(";")}"
+        class="box w-full box-border rounded-sm bg-white max-w-414 ${classList.join(
+          " "
+        )}"
+        style="${styleStr(styles)}"
       >
         ${sanitizedChildren.join("")}
       </div>

@@ -1,78 +1,20 @@
-// class Modal {
-//   constructor({ title, content, onClose }) {
-//     this.container = document.createElement("div");
-//     this.container.classList.add(
-//       "modal-container",
-//       "flex",
-//       "justify-center",
-//       "items-center"
-//     );
-
-//     const modal = document.createElement("div");
-//     modal.classList.add("modal");
-
-//     const modalTitle = new Text(title, {
-//       classList: [
-//         "flex",
-//         "items-center",
-//         "justify-center",
-//         "text-xl",
-//         "font-semibold",
-//       ],
-//       styles: {
-//         padding: "20px 0px",
-//         position: "relative",
-//       },
-//     });
-
-//     modal.appendChild(modalTitle.render());
-
-//     const modalContent = document.createElement("div");
-//     modalContent.classList.add("modal-content");
-//     modalContent.appendChild(content.render());
-
-//     modal.appendChild(modalContent);
-
-//     const closeButton = new Text("X", {
-//       classList: ["close-button"],
-//     }).render();
-
-//     closeButton.addEventListener("click", () => {
-//       this.close();
-//       onClose?.();
-//     });
-
-//     modal.appendChild(closeButton);
-//     this.container.appendChild(modal);
-//     document.body.appendChild(this.container);
-//   }
-
-//   open() {
-//     this.container.style.display = "flex";
-//     this.container.classList.add("active");
-//     document.body.style.overflow = "hidden";
-//   }
-
-//   close() {
-//     this.container.classList.remove("active");
-//     this.container.style.display = "none";
-//     document.body.style.overflow = "";
-//   }
-// }
-
-// export default Modal;
 import Component from "../../../core/component";
+import { styleStr } from "../../../helper/style";
 import Text from "../Text/Text";
 
 class Modal extends Component {
+  constructor() {
+    super();
+    this.setDefaultProps();
+  }
+
   setDefaultProps() {
     this.props = {
       title: "",
       content: null,
-      onClose: null,
-      width: 500,
+      width: 414,
       padding: 20,
-      isModalShow: true,
+      isModalShow: false,
       key: "modal",
     };
   }
@@ -83,23 +25,10 @@ class Modal extends Component {
     return (props) => {
       if (props) this.setProps(props);
 
-      const {
-        title,
-        content,
-        width,
-        padding,
-        isModalShow,
-
-        key,
-      } = this.props;
+      const { title, content, isModalShow, key } = this.props;
 
       const modalStyle = {
         display: isModalShow ? "flex" : "none",
-      };
-
-      const modalBodyStyle = {
-        width: `${width}px`,
-        padding: `${padding}px`,
       };
 
       const titleTextProps = {
@@ -110,93 +39,110 @@ class Modal extends Component {
           "justify-center",
           "text-xl",
           "font-semibold",
+          "px20-py0",
         ],
-        styles: {
-          padding: "20px 0px",
-          position: "relative",
-        },
       };
 
       const renderedTitleText = titleText.render(titleTextProps);
-
-      // content가 Component 인스턴스인 경우 렌더링
-      let contentHtml = "";
-      if (content && typeof content.render === "function") {
-        contentHtml = content.render();
-      } else if (typeof content === "string") {
-        contentHtml = content;
-      }
+      const contentHtml = this.renderContent();
 
       return `
-        <div class="modal-container ${key}" style="${this.getStyleString(
+      <div class="modal-container w-full h-full fixed justify-center items-center" id="${key}" style="${styleStr(
         modalStyle
       )}">
-          <div class="modal" style="${this.getStyleString(modalBodyStyle)}">
-            ${renderedTitleText}
-            <div class="modal-content">
-              ${contentHtml}
+        <div class="modal max-w-350 relative rounded-lg bg-white px32-py15">
+          <div 
+            class="close-button black absolute cursor-pointer text-xl" 
+            style="top: 10px; right: 10px; padding: 5px;"
+            >
+              X
             </div>
-            <div class="close-button">X</div>
+          ${renderedTitleText}
+          <div class="modal-content flex justify-center items-center" style="padding: 20px;">
+            ${contentHtml}
           </div>
         </div>
-      `;
+      </div>
+    `;
     };
   }
 
-  getStyleString(styles) {
-    return Object.entries(styles)
-      .map(([key, value]) => `${key}: ${value}`)
-      .join("; ");
-  }
-
   setEvent() {
-    const { onClose } = this.props;
+    const { key } = this.props;
+    const modalContainer = document.getElementById(key);
+    if (!modalContainer) return;
 
-    this.addEvent("click", ".modal__close-btn", () => {
-      this.close();
-      if (onClose) onClose();
-    });
+    const closeButton = modalContainer.querySelector(".close-button");
+    const modalBody = modalContainer.querySelector(".modal");
 
-    this.addEvent(
-      "click",
-      ".modal-container",
-      (e) => {
-        if (e.target.classList.contains("modal-container")) {
-          this.close();
-          if (onClose) onClose();
-        }
-      },
-      true
+    document.addEventListener(
+      "keydown",
+      (e) => e.key === "Escape" && this.close()
     );
+    closeButton.addEventListener("click", () => this.close());
+    modalBody.addEventListener("click", (e) => e.stopPropagation());
+    modalContainer.addEventListener(
+      "click",
+      (e) => e.target === modalContainer && this.close()
+    );
+
+    if (
+      this.props.content &&
+      typeof this.props.content.setEvent === "function"
+    ) {
+      this.props.content.setEvent();
+    }
   }
 
   open() {
-    this.setState({ isModalShow: true });
-    document.body.style.overflow = "hidden";
+    const modalHTML = this.render();
 
-    // 이미 렌더링된 모달이 있으면 표시
-    const modalContainer = document.querySelector(`.modal_${this.props.key}`);
+    const existingModals = document.querySelectorAll(".modal-container");
+    existingModals.forEach((modal) => {
+      modal.remove();
+    });
+
+    document.body.insertAdjacentHTML("beforeend", modalHTML);
+    const modalContainer = document.getElementById(this.props.key);
     if (modalContainer) {
       modalContainer.style.display = "flex";
-      modalContainer.classList.add("active");
-    } else {
-      // 없으면 body에 직접 추가
-      const modalDiv = document.createElement("div");
-      modalDiv.innerHTML = this.render();
-      document.body.appendChild(modalDiv.firstChild);
       this.setEvent();
     }
   }
 
   close() {
-    this.setState({ isModalShow: false });
-    document.body.style.overflow = "";
+    this.setProps({ isModalShow: false });
 
-    const modalContainer = document.querySelector(`.modal_${this.props.key}`);
+    const modalContainer = document.getElementById(this.props.key);
     if (modalContainer) {
-      modalContainer.classList.remove("active");
-      modalContainer.style.display = "none";
+      modalContainer.remove();
     }
+  }
+
+  renderContent() {
+    const { content } = this.props;
+
+    if (!content) return "";
+
+    if (typeof content === "string") {
+      return content;
+    }
+
+    if (typeof content.render === "function") {
+      return content.render();
+    }
+
+    if (typeof content === "object") {
+      return `<pre>${JSON.stringify(content, null, 2)}</pre>`;
+    }
+
+    return String(content);
+  }
+
+  render() {
+    const templateFn = this.template();
+    const html = templateFn(this.props);
+    return html;
   }
 }
 

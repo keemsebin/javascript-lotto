@@ -1,63 +1,20 @@
-// class Input {
-//   constructor({ $target, placeholder, onInput }) {
-//     this.input = document.createElement("input");
-//     this.input.type = "text";
-//     this.input.placeholder = placeholder;
-//     this.input.addEventListener("input", onInput);
-//     this.input.classList.add("input");
-
 import Component from "../../../core/component";
-
-//     if ($target) {
-//       $target.appendChild(this.input);
-//     }
-//   }
-
-//   render() {
-//     return this.input;
-//   }
-
-//   getValue() {
-//     return this.input.value;
-//   }
-
-//   setValue(value) {
-//     this.input.value = value;
-//   }
-
-//   clearValue() {
-//     this.input.value = "";
-//   }
-
-//   focus() {
-//     this.input.focus();
-//   }
-
-//   blur() {
-//     this.input.blur();
-//   }
-
-//   addClass(className) {
-//     this.input.classList.add(className);
-//   }
-
-//   removeClass(className) {
-//     this.input.classList.remove(className);
-//   }
-// }
-// export default Input;
+import { styleStr } from "../../../helper/style";
 
 class Input extends Component {
   constructor() {
     super();
+    this.setDefaultProps();
   }
 
   setDefaultProps() {
     this.props = {
-      placeholder: "innertext",
+      placeholder: "",
       type: "text",
       value: "",
       onChange: () => {},
+      classList: [],
+      styles: {},
       id: "",
     };
   }
@@ -66,43 +23,41 @@ class Input extends Component {
     return (props) => {
       if (props) this.setProps(props);
 
-      const { placeholder, type, value, classList, id } = this.props;
+      const { placeholder, type, value, id, styles, classList } = this.props;
 
       return `
       <input
-        id="${this.props.id}"
+        id="${id}"
         type="${type}"
         placeholder="${placeholder}"
         value="${value}"
-        class="input flex items-center justify-center"
+        class="${classList.join(
+          " "
+        )} input w-full h-36 box-border flex items-center justify-center rounded-sm text-lg p-8"
+        style="${styleStr(styles)} border: 1px solid var(--gray-400);"
       />
     `;
     };
   }
 
-  setEvent(props) {
-    const { id } = props;
-    document.getElementById(id).addEventListener("change", () => onChange());
+  setEvent() {
+    const { onChange, id } = this.props;
+    const inputElement = document.getElementById(id);
+
+    if (!inputElement) return;
+
+    inputElement.addEventListener("input", (e) => {
+      onChange(e.target.value);
+    });
   }
 
-  // render(props) {
-  //   if (props) this.setProps(props);
+  render(props) {
+    if (props) this.setProps(props);
+    const templateFn = this.template();
+    const html = templateFn(this.props);
 
-  //   const templateFn = this.template();
-  //   const html = templateFn();
-
-  //   return html;
-  // }
-  // setEvent() {
-  //   const input = document.getElementById(this.props.id);
-  //   if (input) {
-  //     input.addEventListener("input", (e) => {
-  //       if (this.props.onChange) {
-  //         this.props.onChange(e.target.value);
-  //       }
-  //     });
-  //   }
-  // }
+    return html;
+  }
 }
 
 export default Input;

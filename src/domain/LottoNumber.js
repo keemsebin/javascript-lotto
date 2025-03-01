@@ -22,7 +22,7 @@ class LottoNumber {
         min: this.constructor.LOTTO_NUMBER.MIN,
         max: this.constructor.LOTTO_NUMBER.MAX,
       },
-      this.constructor.LOTTO_NUMBER.LENGTH
+      number
     );
   }
 

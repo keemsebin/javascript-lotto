@@ -105,10 +105,7 @@ export default class PriceForm extends Component {
     const submitButton = this.addChild(Button);
     return submitButton.render({
       content: "구입",
-      onClick: () => {
-        console.log("object");
-        this.processLottoPurchase();
-      },
+      onClick: () => this.processLottoPurchase(),
       classList: [
         "inline-flex",
         "justify-center",

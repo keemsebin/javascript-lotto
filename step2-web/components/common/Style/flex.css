@@ -49,3 +49,7 @@
 .items-baseline {
   align-items: baseline;
 }
+
+.gap-10 {
+  gap: 10px;
+}

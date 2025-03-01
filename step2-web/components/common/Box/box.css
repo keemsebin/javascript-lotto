@@ -1,8 +1,0 @@
-@import url("../Colors/colors.css");
-.box {
-  box-sizing: border-box;
-  width: 100%;
-  max-width: 414px;
-  border-radius: 4px;
-  background-color: var(--white);
-}

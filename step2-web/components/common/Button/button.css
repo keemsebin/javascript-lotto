@@ -1,9 +1,0 @@
-.button {
-  height: 36px;
-  padding: 0 16px;
-  border-radius: 4px;
-  background-color: var(--primary);
-  border: none;
-  white-space: nowrap;
-  cursor: pointer;
-}

@@ -1,6 +1,0 @@
-@import url("../../common/Colors/colors.css");
-
-.main {
-  height: calc(100vh - 80px - 64px);
-  background-color: var(--gray-50);
-}

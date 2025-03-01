@@ -1,31 +1,4 @@
-// class Header {
-//   constructor(title) {
-//     this.title = title;
-//     this.render();
-//   }
-
 import Component from "../../../core/component";
-
-//   render() {
-//     const header = document.createElement("header");
-//     header.classList.add(
-//       "header",
-//       "flex",
-//       "justify-start",
-//       "items-center",
-//       "primary"
-//     );
-
-//     const titleElement = document.createElement("span");
-//     titleElement.classList.add("text-2xl", "font-extrabold", "white");
-//     titleElement.textContent = this.title;
-
-//     header.appendChild(titleElement);
-//     document.body.prepend(header);
-//   }
-// }
-
-// export default Header;
 
 export default class Header extends Component {
   initState() {
@@ -48,7 +21,10 @@ export default class Header extends Component {
       const title = props && props.title ? props.title : this.state.title;
 
       return `
-        <header class="header flex justify-start items-center primary">
+        <header 
+          class="header w-full box-border flex items-center primary bg-primary"
+          style="height: 64px; padding: 0 0 0 30px;"
+          >
           <span class="text-2xl font-extrabold white">${title}</span>
         </header>
       `;
@@ -65,7 +41,6 @@ export default class Header extends Component {
     if (container) {
       container.innerHTML = html;
       this.setEvent();
-      this.componentDidMount();
     }
     return html;
   }

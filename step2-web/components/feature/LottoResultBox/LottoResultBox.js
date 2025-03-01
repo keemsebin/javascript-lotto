@@ -1,81 +1,105 @@
+import Component from "../../../core/component";
 import { LottoMachine } from "../../../../src/domain/LottoMachine";
-import Button from "../../common/Button/Button";
-import Table from "../../common/Table/Table";
 import Text from "../../common/Text/Text";
+import Table from "../../common/Table/Table";
+import Button from "../../common/Button/Button";
 
-class LottoResultBox {
-  constructor(lottoResult) {
-    this.lottoResult = lottoResult;
-    this.element = document.createElement("section");
-    this.element.classList.add("flex", "flex-col", "w-full");
-    this.init();
+const HEADER = ["일치 갯수", "당첨금", "당첨 갯수"];
+export default class LottoResultBox extends Component {
+  constructor() {
+    super();
+    this.setDefaultProps();
   }
 
-  init() {
-    const history = this.lottoResult.getWinningHistory();
-    const totalProfit = this.lottoResult.getRate();
+  setDefaultProps() {
+    this.props = {
+      lottoResult: null,
+      lottoRate: 0,
+    };
+  }
 
-    console.log("totalProfit", totalProfit);
-
-    const headers = ["일치 갯수", "당첨금", "당첨 갯수"];
-    const data = LottoMachine.LOTTO_STATUS.map((status) => {
-      const { RANK, COUNT, REWORD, IS_BONUS } = status;
-      const count = history[RANK] || 0;
-
-      const matchText = IS_BONUS ? `${COUNT}개+보너스볼` : `${COUNT}개`;
-      const prizeText = REWORD.toLocaleString("ko-KR");
-      const countText = `${count}개`;
-
-      return [matchText, prizeText, countText];
-    }).reverse();
-
-    const resultTable = new Table({
-      headers,
-      data,
-      styles: {
-        tableLayout: "auto",
-        width: "100%",
-      },
-    });
-
-    this.element.appendChild(resultTable.render());
-
-    const profitContainer = new Text(
-      `당신의 총 수익률은 ${totalProfit}%입니다.`,
-      {
-        classList: [
-          "flex",
-          "justify-center",
-          "items-center",
-          "text-lg",
-          "font-bold",
-        ],
-        styles: {
-          width: "full",
-          padding: "40px 0px",
-        },
+  renderTable() {
+    const resultTable = this.addChild(Table);
+    const data = LottoMachine.LOTTO_STATUS.map(
+      ({ RANK, COUNT, REWORD, IS_BONUS }) => {
+        return [
+          IS_BONUS ? `${COUNT}개+보너스볼` : `${COUNT}개`,
+          REWORD.toLocaleString("ko-KR"),
+          `${this.props.lottoResult[RANK] || 0}개`,
+        ];
       }
-    );
+    ).reverse();
 
-    this.element.appendChild(profitContainer.render());
-
-    const restartButton = new Button({
-      text: "다시 시작하기",
-      type: "submit",
-    });
-
-    const buttonElement = restartButton.render();
-
-    buttonElement.addEventListener("click", () => {
-      window.location.reload();
-    });
-
-    this.element.appendChild(buttonElement);
+    return resultTable.render({ headers: HEADER, data });
   }
 
-  render() {
-    return this.element;
+  renderProfitText() {
+    const profitText = this.addChild(Text);
+    return profitText.render({
+      content: `당신의 총 수익률은 ${this.props.lottoRate}%입니다.`,
+      classList: [
+        "w-full",
+        "flex",
+        "justify-center",
+        "items-center",
+        "text-lg",
+        "font-bold",
+        "px32-py15",
+      ],
+    });
+  }
+
+  renderRestartButton() {
+    const restartButton = this.addChild(Button);
+    return restartButton.render({
+      content: "다시 시작하기",
+      onClick: () => {
+        window.location.reload();
+      },
+      classList: ["block", "w-full"],
+      styles: { padding: "10px", marginTop: "20px" },
+      id: "restart-button",
+    });
+  }
+
+  handleRestartClick() {
+    console.log("handleRestartClick");
+    window.location.reload();
+  }
+
+  template() {
+    return (props) => {
+      if (props) this.setProps(props);
+
+      return `
+        <div class="lotto-result-box flex flex-col w-full">
+          ${this.renderTable()}
+          ${this.renderProfitText()}
+          ${this.renderRestartButton()}
+        </div>
+      `;
+    };
+  }
+
+  setEvent() {
+    const restartButton = document.getElementById("restart-button");
+
+    if (restartButton) {
+      restartButton.addEventListener("click", () => {
+        this.handleRestartClick();
+      });
+    }
+  }
+
+  componentDidMount() {
+    this.setEvent();
+  }
+
+  render(props) {
+    if (props) this.setProps(props);
+    const templateFn = this.template();
+    const html = templateFn(this.props);
+    this.componentDidMount();
+    return html;
   }
 }
-
-export default LottoResultBox;

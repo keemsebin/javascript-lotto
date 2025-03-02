@@ -9,15 +9,12 @@ const LottoShop = {
   },
 
   issueLottoNumbers: () => {
-    const randomNumberStore = new Set();
-    while (randomNumberStore.size < Lotto.CONSTRAINTS.COUNT) {
-      const number = getRandomNumber(
-        LottoNumber.CONSTRAINTS.MIN,
-        LottoNumber.CONSTRAINTS.MAX
-      );
-      LottoShop.checkAndAddLottoNumbers(randomNumberStore, number);
-    }
-    return new Lotto([...randomNumberStore]);
+    return new Lotto(
+      [...Array(LottoNumber.CONSTRAINTS.MAX)]
+        .map((_, i) => i + 1)
+        .sort(() => Math.random() - 0.5)
+        .slice(0, Lotto.CONSTRAINTS.COUNT)
+    );
   },
 
   createLottos: (count) => {

@@ -25,13 +25,13 @@ class LottoMachine {
     this.#matchedLottoStatus.push(currentStatus);
   }
 
-  #getMatchingNumbers(enteredLottoNumbers) {
+  getMatchingNumbers(enteredLottoNumbers) {
     return this.#issuedLottoNumbers.map((lotto) => {
       return lotto.getIncludeSameNumbers(enteredLottoNumbers);
     });
   }
 
-  #getHasBonusNumbers(bonusLottoNumbers) {
+  getHasBonusNumbers(bonusLottoNumbers) {
     return this.#issuedLottoNumbers.map((lotto) => {
       return lotto.getIncludeSameNumbers([bonusLottoNumbers]) > 0;
     });
@@ -61,8 +61,8 @@ class LottoMachine {
   }
 
   getMatchedLottoStatus(enteredLottoNumbers, bonusLottoNumber) {
-    const matchingNumbers = this.#getMatchingNumbers(enteredLottoNumbers);
-    const isBonusArray = this.#getHasBonusNumbers(bonusLottoNumber);
+    const matchingNumbers = this.getMatchingNumbers(enteredLottoNumbers);
+    const isBonusArray = this.getHasBonusNumbers(bonusLottoNumber);
 
     this.#updateFinalStatus(matchingNumbers, isBonusArray);
 

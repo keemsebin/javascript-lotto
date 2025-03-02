@@ -1,5 +1,3 @@
-import "../step2-web/components/common/Modal/modal.css";
-import "../step2-web/components/common/Style/index.css";
 import Header from "../step2-web/components/feature/Header/Header.js";
 import LottoShop from "../step2-web/components/feature/LottoShop/LottoShop.js";
 import Footer from "../step2-web/components/feature/Footer/Footer.js";

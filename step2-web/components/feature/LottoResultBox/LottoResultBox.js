@@ -1,8 +1,8 @@
-import Component from "../../../core/component";
-import { LottoMachine } from "../../../../src/domain/LottoMachine";
-import Text from "../../common/Text/Text";
-import Table from "../../common/Table/Table";
-import Button from "../../common/Button/Button";
+import Component from "../../../core/component.js";
+import { LottoMachine } from "../../../../src/domain/LottoMachine.js";
+import Text from "../../common/Text/Text.js";
+import Table from "../../common/Table/Table.js";
+import Button from "../../common/Button/Button.js";
 
 const HEADER = ["일치 갯수", "당첨금", "당첨 갯수"];
 export default class LottoResultBox extends Component {

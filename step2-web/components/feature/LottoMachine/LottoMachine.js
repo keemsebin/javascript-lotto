@@ -1,5 +1,5 @@
-import Component from "../../../core/component";
-import Text from "../../common/Text/Text";
+import Component from "../../../core/component.js";
+import Text from "../../common/Text/Text.js";
 
 export default class LottoMachine extends Component {
   constructor() {

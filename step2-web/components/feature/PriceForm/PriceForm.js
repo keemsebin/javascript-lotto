@@ -1,12 +1,12 @@
-import Component from "../../../core/component";
-import { Price as PriceDomain } from "../../../../src/domain/Price";
-import { PRICE } from "../../../../src/domain/Price";
-import { divideByUnit } from "../../../../src/utils/count";
-import LottoShop from "../../../../src/domain/LottoShop";
-import Text from "../../common/Text/Text";
-import Input from "../../common/Input/Input";
-import Button from "../../common/Button/Button";
-import Modal from "../../common/Modal/Modal";
+import Component from "../../../core/component.js";
+import { Price as PriceDomain } from "../../../../src/domain/Price.js";
+import { PRICE } from "../../../../src/domain/Price.js";
+import { divideByUnit } from "../../../../src/utils/count.js";
+import LottoShop from "../../../../src/domain/LottoShop.js";
+import Text from "../../common/Text/Text.js";
+import Input from "../../common/Input/Input.js";
+import Button from "../../common/Button/Button.js";
+import Modal from "../../common/Modal/Modal.js";
 
 export default class PriceForm extends Component {
   static savedPrice = "";

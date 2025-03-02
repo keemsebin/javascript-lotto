@@ -1,9 +1,9 @@
-import Button from "../../common/Button/Button";
-import Input from "../../common/Input/Input";
-import { LottoNumber as LottoNumberDomain } from "../../../../src/domain/LottoNumber";
-import { Lotto as LottoDomain } from "../../../../src/domain/Lotto";
-import Modal from "../../common/Modal/Modal";
-import Component from "../../../core/component";
+import Button from "../../common/Button/Button.js";
+import Input from "../../common/Input/Input.js";
+import { LottoNumber as LottoNumberDomain } from "../../../../src/domain/LottoNumber.js";
+import { Lotto as LottoDomain } from "../../../../src/domain/Lotto.js";
+import Modal from "../../common/Modal/Modal.js";
+import Component from "../../../core/component.js";
 
 export default class NumberForm extends Component {
   static savedWinningNumbers = Array(6).fill("");

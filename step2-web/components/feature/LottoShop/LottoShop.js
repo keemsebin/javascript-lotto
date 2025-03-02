@@ -1,12 +1,12 @@
-import Text from "../../common/Text/Text";
-import PriceForm from "../PriceForm/PriceForm";
-import LottoMachine from "../LottoMachine/LottoMachine";
-import NumberForm from "../NumberForm/NumberForm";
-import { LottoMachine as LottoMachineDomain } from "../../../../src/domain/LottoMachine";
-import Modal from "../../common/Modal/Modal";
-import LottoResultBox from "../LottoResultBox/LottoResultBox";
-import Component from "../../../core/component";
-import { LottoResult as LottoResultDomain } from "../../../../src/domain/LottoResult";
+import Text from "../../common/Text/Text.js";
+import PriceForm from "../PriceForm/PriceForm.js";
+import LottoMachine from "../LottoMachine/LottoMachine.js";
+import NumberForm from "../NumberForm/NumberForm.js";
+import { LottoMachine as LottoMachineDomain } from "../../../../src/domain/LottoMachine.js";
+import Modal from "../../common/Modal/Modal.js";
+import LottoResultBox from "../LottoResultBox/LottoResultBox.js";
+import Component from "../../../core/component.js";
+import { LottoResult as LottoResultDomain } from "../../../../src/domain/LottoResult.js";
 
 export default class LottoShop extends Component {
   constructor() {

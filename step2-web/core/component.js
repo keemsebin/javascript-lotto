@@ -1,5 +1,3 @@
-// import * as dom from "./dom";
-
 export default class Component {
   props;
   state;

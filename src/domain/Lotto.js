@@ -3,33 +3,35 @@ import { throwError } from "../utils/throwError.js";
 import { LottoNumber } from "./LottoNumber.js";
 
 class Lotto {
+  static LOTTO = Object.freeze({ COUNT: 6 });
+
   #numbers = [];
 
   constructor(numbers) {
     const lottoNumbers = numbers.map((num) => new LottoNumber(num));
-    this.#numbers = this.sortLottoNumber(lottoNumbers);
-    this.validate(this.#numbers);
+    this.#numbers = this.#sortLottoNumber(lottoNumbers);
+    this.#validate(this.#numbers);
   }
 
-  isDuplicate(numbers) {
+  #checkDuplicate(numbers) {
     const values = numbers.map((num) => num.getValue());
     if (new Set(values).size !== values.length) {
       throwError(ERROR.DUPLICATE);
     }
   }
 
-  checkLength(numbers) {
-    if (numbers.length !== LottoNumber.LOTTO_NUMBER.LENGTH) {
+  #checkLength(numbers) {
+    if (numbers.length !== this.constructor.LOTTO.COUNT) {
       throwError(ERROR.LENGTH);
     }
   }
 
-  validate(numbers) {
-    this.isDuplicate(numbers);
-    this.checkLength(numbers);
+  #validate(numbers) {
+    this.#checkDuplicate(numbers);
+    this.#checkLength(numbers);
   }
 
-  sortLottoNumber(numbers) {
+  #sortLottoNumber(numbers) {
     return numbers.sort((a, b) => a.getValue() - b.getValue());
   }
 

@@ -1,5 +1,5 @@
 import Component from "../../../core/component.js";
-import { LottoMachine } from "../../../../src/domain/LottoMachine.js";
+import { LottoMachine as LottoMachineDomain } from "../../../../src/domain/LottoMachine.js";
 import Text from "../../common/Text/Text.js";
 import Table from "../../common/Table/Table.js";
 import Button from "../../common/Button/Button.js";
@@ -20,7 +20,7 @@ export default class LottoResultBox extends Component {
 
   renderTable() {
     const resultTable = this.addChild(Table);
-    const data = LottoMachine.LOTTO_STATUS.map(
+    const data = LottoMachineDomain.LOTTO_STATUS.map(
       ({ RANK, COUNT, REWORD, IS_BONUS }) => {
         return [
           IS_BONUS ? `${COUNT}개+보너스볼` : `${COUNT}개`,

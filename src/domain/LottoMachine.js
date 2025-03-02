@@ -2,6 +2,11 @@ class LottoMachine {
   #issuedLottoNumbers;
   #matchedLottoStatus;
 
+  static CONSTRAINTS = Object.freeze({
+    MIN_WINNING_COUNT: 3,
+    BONUS_MATCH_COUNT: 5,
+  });
+
   static LOTTO_STATUS = Object.freeze([
     { RANK: 1, COUNT: 6, REWORD: 2_000_000_000, IS_BONUS: false },
     { RANK: 2, COUNT: 5, REWORD: 30_000_000, IS_BONUS: true },
@@ -20,24 +25,32 @@ class LottoMachine {
     this.#matchedLottoStatus.push(currentStatus);
   }
 
-  getMatchingNumbers(enteredLottoNumbers) {
+  #getMatchingNumbers(enteredLottoNumbers) {
     return this.#issuedLottoNumbers.map((lotto) => {
       return lotto.getIncludeSameNumbers(enteredLottoNumbers);
     });
   }
 
-  getHasBonusNumbers(bonusLottoNumbers) {
+  #getHasBonusNumbers(bonusLottoNumbers) {
     return this.#issuedLottoNumbers.map((lotto) => {
-      return lotto.getLottoNumbers().includes(bonusLottoNumbers);
+      return lotto.getIncludeSameNumbers([bonusLottoNumbers]) > 0;
     });
   }
 
-  updateFinalStatus(matchingNumbers, isBonusArray) {
+  #updateFinalStatus(matchingNumbers, isBonusArray) {
     matchingNumbers.forEach((matchingNumber, index) => {
-      if (matchingNumber < 3) return;
+      if (matchingNumber < this.constructor.CONSTRAINTS.MIN_WINNING_COUNT)
+        return;
 
-      if (matchingNumber === 5 && isBonusArray[index]) {
-        this.updateStatus((status) => status.COUNT === 5 && status.IS_BONUS);
+      if (
+        matchingNumber === this.constructor.CONSTRAINTS.BONUS_MATCH_COUNT &&
+        isBonusArray[index]
+      ) {
+        this.updateStatus(
+          (status) =>
+            status.COUNT === this.constructor.CONSTRAINTS.BONUS_MATCH_COUNT &&
+            status.IS_BONUS
+        );
         return;
       }
 
@@ -48,10 +61,10 @@ class LottoMachine {
   }
 
   getMatchedLottoStatus(enteredLottoNumbers, bonusLottoNumber) {
-    const matchingNumbers = this.getMatchingNumbers(enteredLottoNumbers);
-    const isBonusArray = this.getHasBonusNumbers(bonusLottoNumber);
+    const matchingNumbers = this.#getMatchingNumbers(enteredLottoNumbers);
+    const isBonusArray = this.#getHasBonusNumbers(bonusLottoNumber);
 
-    this.updateFinalStatus(matchingNumbers, isBonusArray);
+    this.#updateFinalStatus(matchingNumbers, isBonusArray);
 
     return this.#matchedLottoStatus;
   }

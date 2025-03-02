@@ -1,4 +1,4 @@
-import { OUTPUT } from "../constants/message.js";
+import { OUTPUT } from "./message.js";
 import { LottoMachine } from "../domain/LottoMachine.js";
 
 const Output = {

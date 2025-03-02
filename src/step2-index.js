@@ -1,8 +1,8 @@
 import "../step2-web/components/common/Modal/modal.css";
 import "../step2-web/components/common/Style/index.css";
-import Header from "../step2-web/components/feature/Header/Header";
-import LottoShop from "../step2-web/components/feature/LottoShop/LottoShop";
-import Footer from "../step2-web/components/feature/Footer/Footer";
+import Header from "../step2-web/components/feature/Header/Header.js";
+import LottoShop from "../step2-web/components/feature/LottoShop/LottoShop.js";
+import Footer from "../step2-web/components/feature/Footer/Footer.js";
 
 /**
  * step 2의 시작점이 되는 파일입니다.

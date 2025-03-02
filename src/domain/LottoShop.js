@@ -10,10 +10,10 @@ const LottoShop = {
 
   issueLottoNumbers: () => {
     const randomNumberStore = new Set();
-    while (randomNumberStore.size < LottoNumber.LOTTO_NUMBER.LENGTH) {
+    while (randomNumberStore.size < Lotto.CONSTRAINTS.COUNT) {
       const number = getRandomNumber(
-        LottoNumber.LOTTO_NUMBER.MIN,
-        LottoNumber.LOTTO_NUMBER.MAX
+        LottoNumber.CONSTRAINTS.MIN,
+        LottoNumber.CONSTRAINTS.MAX
       );
       LottoShop.checkAndAddLottoNumbers(randomNumberStore, number);
     }

@@ -3,10 +3,9 @@ import { isEmpty, isNumber, isRange } from "../utils/validation.js";
 class LottoNumber {
   #number;
 
-  static LOTTO_NUMBER = Object.freeze({
+  static CONSTRAINTS = Object.freeze({
     MIN: 1,
     MAX: 45,
-    LENGTH: 6,
   });
 
   constructor(number) {
@@ -19,8 +18,8 @@ class LottoNumber {
     isNumber(number);
     isRange(
       {
-        min: this.constructor.LOTTO_NUMBER.MIN,
-        max: this.constructor.LOTTO_NUMBER.MAX,
+        min: this.constructor.CONSTRAINTS.MIN,
+        max: this.constructor.CONSTRAINTS.MAX,
       },
       number
     );

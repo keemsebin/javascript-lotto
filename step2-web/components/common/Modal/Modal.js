@@ -1,6 +1,6 @@
-import Component from "../../../core/component";
-import { styleStr } from "../../../helper/style";
-import Text from "../Text/Text";
+import Component from "../../../core/component.js";
+import { styleStr } from "../../../helper/style.js";
+import Text from "../Text/Text.js";
 
 class Modal extends Component {
   constructor() {

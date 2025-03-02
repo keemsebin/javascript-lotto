@@ -1,5 +1,5 @@
-import Component from "../../../core/component";
-import { styleStr } from "../../../helper/style";
+import Component from "../../../core/component.js";
+import { styleStr } from "../../../helper/style.js";
 
 class Input extends Component {
   constructor() {

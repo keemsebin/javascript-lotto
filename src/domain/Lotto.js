@@ -1,4 +1,4 @@
-import { ERROR } from "../constants/message.js";
+import { ERROR } from "../view/message.js";
 import { throwError } from "../utils/throwError.js";
 import { LottoNumber } from "./LottoNumber.js";
 
@@ -8,7 +8,7 @@ class Lotto {
   #numbers;
 
   constructor(numbers) {
-    const lottoNumbers = numbers.map((num) => new LottoNumber(num));
+    const lottoNumbers = numbers.map(LottoNumber.of);
     this.#numbers = this.#sortLottoNumber(lottoNumbers);
     this.#validate(this.#numbers);
   }

@@ -8,6 +8,10 @@ class LottoNumber {
     MAX: 45,
   });
 
+  static of(number) {
+    return new LottoNumber(number);
+  }
+
   constructor(number) {
     this.#number = number;
     this.validate(number);

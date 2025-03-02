@@ -1,5 +1,5 @@
 class LottoMachine {
-  #issuedLottoNumbers = [];
+  #issuedLottoNumbers;
   #matchedLottoStatus;
 
   static LOTTO_STATUS = Object.freeze([

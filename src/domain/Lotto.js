@@ -3,9 +3,9 @@ import { throwError } from "../utils/throwError.js";
 import { LottoNumber } from "./LottoNumber.js";
 
 class Lotto {
-  static LOTTO = Object.freeze({ COUNT: 6 });
+  static CONSTRAINTS = Object.freeze({ COUNT: 6 });
 
-  #numbers = [];
+  #numbers;
 
   constructor(numbers) {
     const lottoNumbers = numbers.map((num) => new LottoNumber(num));
@@ -21,7 +21,7 @@ class Lotto {
   }
 
   #checkLength(numbers) {
-    if (numbers.length !== this.constructor.LOTTO.COUNT) {
+    if (numbers.length !== this.constructor.CONSTRAINTS.COUNT) {
       throwError(ERROR.LENGTH);
     }
   }

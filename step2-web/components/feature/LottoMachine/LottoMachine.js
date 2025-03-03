@@ -40,7 +40,7 @@ export default class LottoMachine extends Component {
           <div class="w-full flex items-start justify-start mt-20">
           ${this.renderPurchaseText()}
           </div>
-          <div class="w-full flex flex-col items-start justify-start text-lg font-regular mt-20 gap-10" style=" overflow-y: auto;">
+          <div class="w-full flex flex-col items-start justify-start text-lg font-regular mt-20 gap-10" style="max-height: 240px; overflow-y: auto;">
             ${this.renderLottoNumbers()}
           </div>
 
